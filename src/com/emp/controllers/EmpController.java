@@ -112,7 +112,7 @@ public class EmpController {
       if (loginBean != null && loginBean.getUserName() != null & loginBean.getPassword() != null) {
         if (loginBean.getUserName().equals("chandra") && loginBean.getPassword().equals("chandra123")) {
           model.addAttribute("msg", loginBean.getUserName());
-          return "viewemp";
+          return "redirect:/viewemp";
         } else {
           model.addAttribute("error", "Invalid Details");
           return "login";
