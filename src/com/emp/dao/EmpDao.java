@@ -31,6 +31,8 @@ public Emp getEmpById(int id){
     String sql="select * from Emp99 where id=?";    
     return template.queryForObject(sql, new Object[]{id},new BeanPropertyRowMapper<Emp>(Emp.class));    
 }    
+
+
 public List<Emp> getEmployees(){    
     return template.query("select * from Emp99",new RowMapper<Emp>(){    
         public Emp mapRow(ResultSet rs, int row) throws SQLException {    

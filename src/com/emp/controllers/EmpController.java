@@ -1,11 +1,16 @@
 package com.emp.controllers;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -106,20 +111,26 @@ public class EmpController {
       model.addAttribute("msg", "Please Enter Your Login Details");
       return "login";
     }
+  
+    // Specify name of a specific view that will be used to display the error:
+    @ExceptionHandler({SQLException.class,DataAccessException.class})
+    public String databaseError() {
+      // Nothing to do.  Returns the logical view name of an error page, passed
+      // to the view-resolver(s) in usual way.
+      // Note that the exception is NOT available to this view (it is not added
+      // to the model) but see "Extending ExceptionHandlerExceptionResolver"
+      // below.
+      return "login";
+    }
     
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(Model model, @ModelAttribute("loginBean") LoginBean loginBean) {
+    public String submit(Model model, @ModelAttribute("loginBean") LoginBean loginBean,@ModelAttribute("userName") String userName,@ModelAttribute("password") String password,HttpServletRequest httpRequest) {
       if (loginBean != null && loginBean.getUserName() != null & loginBean.getPassword() != null) {
-        if (loginBean.getUserName().equals("chandra") && loginBean.getPassword().equals("chandra123")) {
-          model.addAttribute("msg", loginBean.getUserName());
+    	  if (empDao.getEmpByName(userName, password) != null) {
           return "redirect:/viewemp";
-        } else {
-          model.addAttribute("error", "Invalid Details");
-          return "login";
         }
-      } else {
-        model.addAttribute("error", "Please enter Details");
-        return "login";
-      }
+    }
+      return "login";
+      
     }
 }

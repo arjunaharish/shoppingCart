@@ -8,6 +8,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.emp.beans.Emp;
+import com.emp.beans.LoginBean;
+
 import generateEmployeeTables.EmployeeTables;
 
 public class EmpTablesDao {
@@ -45,32 +48,11 @@ public class EmpTablesDao {
 	}
 
 });
-		
-		
-}
-/*	public List<EmployeeTables> getUserToValidate() {
-		return template.query("select * from users",new RowMapper<EmployeeTables>(){    
-	        public EmployeeTables mapRow(ResultSet rs, int row) throws SQLException {    
-	        	EmployeeTables e=new EmployeeTables();    
-	            e.setId(rs.getInt(1));    
-	            e.setName(rs.getString(2));    
-	            e.setSalary(rs.getFloat(3));    
-	            e.setDesignation(rs.getString(4));    
-	            return e;    
-	}
-
-});
-	}*/
-
-	public int getUserToValidate(String username,String password){    
-		
-		    String sql="select username,password from users where username="+username+" and "+password +"";
-		    return template.update(sql);    
 		}
-	
-	public int getUserToValidatePassword(String password){    
-	    
-	    String sql="select password from users where password="+password+"";    
-	    return template.update(sql);    
+
+	public Emp getEmpByName(String userName,String password){    
+		String sql="select FIRST_NAME,PASSWORD from users where FIRST_NAME=? and password=?";
+	    return template.queryForObject(sql, new Object[]{userName,password},new BeanPropertyRowMapper<Emp>(Emp.class));    
 	}    
+  
 }
