@@ -1,5 +1,7 @@
 package generateEmployeeTables;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -46,6 +48,23 @@ public class EmployeeTables {
 	}
 	public void setDesignation(String designation) {
 		this.designation = designation;
+	}
+	
+	private List<EmployeeTables> employeeTables;
+
+	public List<EmployeeTables> getContacts() {
+		return employeeTables;
+	}
+
+	public void setContacts(List<EmployeeTables> employeeTables) {
+		this.employeeTables = employeeTables;
+	}
+
+	public EmployeeTables(int id, String name, float salary, String designation) {
+		this.id = id;
+		this.name = name;
+		this.designation = designation;
+		this.salary = salary;
 	}
 	
 }

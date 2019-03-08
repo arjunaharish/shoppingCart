@@ -24,6 +24,7 @@
 <property name="username" value="system"></property>    
 <property name="password" value="Galaxytab2"></property>    
 </bean>    
+<!-- <bean id="clientFactory" class="org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory" /> -->
     
 <bean id="jt" class="org.springframework.jdbc.core.JdbcTemplate">    
 <property name="dataSource" ref="ds"></property>    
